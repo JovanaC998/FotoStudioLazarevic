@@ -1,4 +1,5 @@
-var errorCount = 0;
+var flag = true;
+document.getElementById("btnSend").addEventListener("click", function(){flag=true});
 $(document).ready(function() {
     "use strict";
 
@@ -271,24 +272,25 @@ function formValidate() {
     dateValidation(date, messageDate);
     timeValidation(ddlTime, messageTime);
 
-    if (errorCount == 0) {
+    if (flag) {
         let divSuccess = document.querySelector("#success");
         divSuccess.setAttribute("class", "alert alert-success mt-4");
 
         divSuccess.innerHTML = `Thanks ${nameContact.value}, we will reach You as soon as possible!`;
 
         document.getElementById("form").reset();
+        console.log(errorCount)
     }
 }
+
 
 function checkRegex(regex, object, message) {
     if (!regex.test(object.value)) {
         object.nextElementSibling.classList.remove("hide");
         object.nextElementSibling.innerHTML = message;
-        errorCount++;
+        flag=false;
     } else {
         object.nextElementSibling.classList.add("hide");
-        errorCount = 0;
     }
 }
 
@@ -296,10 +298,9 @@ function serviceChecks(checkedElements, array, message) {
     if (checkedElements == "") {
         array[array.length - 1].parentElement.parentElement.nextElementSibling.classList.remove("hide");
         array[array.length - 1].parentElement.parentElement.nextElementSibling.innerHTML = message;
-        errorCount++;
+        flag=false;
     } else {
         array[array.length - 1].parentElement.parentElement.nextElementSibling.classList.add("hide");
-        errorCount = 0;
     }
 }
 
@@ -311,10 +312,9 @@ function dateValidation(date, message) {
     if (isNaN(selectedDate) || selectedDate < now) {
         date.parentElement.nextElementSibling.classList.remove("hide");
         date.parentElement.nextElementSibling.innerHTML = message;
-        errorCount++;
+        flag=false;
     } else {
         date.parentElement.nextElementSibling.classList.add("hide");
-        errorCount = 0;
     }
 }
 
@@ -324,10 +324,9 @@ function timeValidation(time, message) {
     if (ddlTimeValue == "0") {
         time.parentElement.parentElement.nextElementSibling.classList.remove("hide");
         time.parentElement.parentElement.nextElementSibling.innerHTML = message;
-        errorCount++;
+        flag=false;
     } else {
         time.parentElement.parentElement.nextElementSibling.classList.add("hide");
-        errorCount = 0;
     }
 
 }
